@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\WebDriver\Network;
 
 use App\Services\WebDriver\JavascriptCallable;
+use App\Services\DirectoryResolver\File\FileExtension;
 use App\Services\DirectoryResolver\File\RandomFile;
-use App\Services\DirectoryResolver\File\Format;
 use App\Traits\Create;
 use Carbon\Carbon;
 use HeadlessChromium\Page;
@@ -33,7 +33,7 @@ class QuestNetwork extends Network
             $navigation = $this->page->navigate($link);
             $navigation->waitForNavigation(Page::LOAD, self::TIMEOUT);
             $this->page->pdf(['printBackground' => false])->saveToFile(
-                RandomFile::create()->fromArray(['app', 'public', 'users', $user->login, 'documents'], Format::PDF)
+                RandomFile::create()->fromArray(['app', 'public', 'users', $user->login, 'documents'], FileExtension::PDF)
             );
         }
     }

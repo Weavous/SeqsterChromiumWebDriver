@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\DirectoryResolver\File;
 
+use App\Services\DirectoryResolver\File\FileExtension;
 use App\Traits\Create;
 use Illuminate\Support\Str;
 
@@ -11,7 +12,7 @@ class RandomFile
 {
     use Create;
 
-    public function fromArray(array $config, string $format): string
+    public function fromArray(array $config, FileExtension $extension): string
     {
         $dir = storage_path(implode(DIRECTORY_SEPARATOR, $config));
 
@@ -19,6 +20,6 @@ class RandomFile
             mkdir($dir, 0777, true);
         }
 
-        return sprintf("%s%s%s", $dir, DIRECTORY_SEPARATOR, sprintf("%s.%s", base64_encode(Str::random(16)), $format));
+        return sprintf("%s%s%s", $dir, DIRECTORY_SEPARATOR, sprintf("%s.%s", base64_encode(Str::random(16)), $extension->stringify()));
     }
 }
