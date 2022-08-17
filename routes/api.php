@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PatientTestResultWebDriverController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('web-driver')->group(function () {
+    Route::prefix('patient')->group(function () {
+        Route::get('documents/{login}', [PatientTestResultWebDriverController::class, 'show']);
+        Route::post('documents', [PatientTestResultWebDriverController::class, 'store']);
+    });
 });
